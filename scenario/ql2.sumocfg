@@ -1,0 +1,21 @@
+<configuration>
+    <input>
+        <net-file value="ql1.net.xml"/>
+        <additional-files value="ql2.det.xml"/>
+        <gui-settings-file value="ql1.settings.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="10000"/>
+    </time>
+    <report>
+    <verbose value="true"/>
+    <no-step-log value="true"/>
+  </report>
+    <view>
+    <netstate-dump value="netstate.xml"/>
+    <edgeLabels show="true" bgColor="255,255,255" fgColor="0,0,0" fontSize="12"/>
+    <laneLabels show="true" bgColor="0,0,0" fgColor="255,255,255" fontSize="10"/>
+    <roadLabels show="true" bgColor="0,0,255" fgColor="255,255,255" fontSize="16"/>
+  </view>
+</configuration>

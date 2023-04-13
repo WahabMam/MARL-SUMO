@@ -3,10 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 output
+config.yaml
+*.yaml
 
 # Local development settings
 .env
-venv/
+venv-marl/
 *.env
 
 # Logs and databases

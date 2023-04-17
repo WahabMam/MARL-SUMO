@@ -5,6 +5,9 @@ __pycache__/
 output
 config.yaml
 *.yaml
+scenario/cross.out
+scenario/netstate.xml
+
 
 # Local development settings
 .env

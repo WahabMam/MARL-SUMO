@@ -7,22 +7,12 @@ from collections import defaultdict
 import xml.etree.ElementTree as ET
 import csv 
 import datetime
+import random
 
 def setup_csv(out_dir,veh_id):
     out_dir = os.path.abspath(out_dir)
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)
-    # out_dirs_list = os.listdir(out_dir)
-    # out_dirs_list.sort()
-    # if len(out_dirs_list) == 0:
-    #     next_dir = f'trail_1'
-    # else:
-    #     last_trail = out_dirs_list[-1]
-    #     last_trail = last_trail.split('_')[1]
-    #     next_dir = f'trail_{int(last_trail)+1}'
-
-    # if not os.path.exists(os.path.join(out_dir,next_dir)):
-    #     os.mkdir(os.path.join(out_dir,next_dir))
     current_datetime = datetime.datetime.now()
     current_time = current_datetime.time()
     current_time = str(current_datetime).split('.')[0].replace(':','-').replace(' ','_')
@@ -141,6 +131,56 @@ def calculate_connections(edgelists, net):
             dict_connection[k].append('')
     return dict_connection 
 
+def average_dicts(*dicts):
+    result_dict = {}
+    keys = set().union(*dicts) # get all unique keys in all dicts
+    
+    for key in keys:
+        # get the lists for the current key from all dicts
+        lists = [d.get(key, [0, 0, 0]) for d in dicts]
+        # calculate the averages of the lists
+        averages = [sum(x) / len(x) for x in zip(*lists)]
+        # store the averages in the result dict
+        result_dict[key] = averages
+    
+    return result_dict
+
+def getRandomRoute(dictconnection,sumo):
+    start_edge = 0
+    dest_edge = 0
+    valid_connections = {}
+    # print(dictconnection)
+    while ("ON A PAS UNE ROUTE VALIDE"):
+        while (start_edge == dest_edge):
+            start_edge = random.randint(0, len(dictconnection)-1)
+            dest_edge = random.randint(0, len(dictconnection)-1)
+        i = 0
+        j = 0
+        for it in dictconnection:
+            if(i == start_edge):
+                pos = it
+                j += 1
+            if(i == dest_edge):
+                dest = it
+                j += 1
+            if(j == 2):
+                break
+            i += 1
+            if(i > len(dictconnection)):
+                i = 0
+        route = sumo.simulation.findRoute(pos, dest)
+        nodes = sumo.simulation.findRoute(pos, dest).edges
+        if (len(nodes) > 3):
+            print("out")
+            break
+        else:
+            start_edge = 0
+            dest_edge = 0
+    return nodes
+    # for key,value in dictconnection.items():
+    #     if '' not in value:
+    #         valid_connections[key] = value
+    # return valid_connections
 
 # def plot_result(episodenum, lst_cntSuccess):
 #     ax = plt.figure().gca()

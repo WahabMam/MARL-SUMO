@@ -32,7 +32,7 @@ Current scenario uses two agents to perform qlearn in an sumo environment.
     ```
 6. Install the required packages from req.txt
     ```
-    pip install req.txt
+    pip install -r req.txt
     ```
 7. Run the 'run.sh' file (linux users) :
     ```

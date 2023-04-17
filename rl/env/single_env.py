@@ -1,4 +1,4 @@
-from utils import checkSumo
+from utils import checkSumo, getRandomRoute
 import random
 
 # traci, sumolib = checkSumo()
@@ -78,8 +78,11 @@ class qlEnv():
         #vehicle  생성
         route_id = "rou"+self.veh[3:]
         id = int(self.veh[3:])
-        valid_routes = [["E19", "E0", "E1","E2"],["E10","E11","E12"]]
-        self.sumo.route.add(route_id, valid_routes[id]) #default route
+        # route = [["E19", "E0", "E1","E2"],["E10","E11","E12"]]
+        # route = route[id]
+        route = getRandomRoute(dictconnection=self.dict_connection,sumo = self.sumo)
+        # print("route : ++++++++++++++ {}".format(route))
+        self.sumo.route.add(route_id, route) #default route
         self.sumo.vehicle.add(self.veh, route_id,departLane='best')
         # self.sumo.vehicle.setParameter(self.veh,'depart',str(id*10))
         curedge = self.get_curedge(self.veh)

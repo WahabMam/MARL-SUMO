@@ -5,7 +5,7 @@ import random
 
 class qlEnv():
     def __init__(self, sumoBinary, traci, logger, net_file: str,det_file: str, cfg_file: str, alldets: list, edgelists: list, dict_connection, 
-                 veh:str, endpoint: list,config:dict, begin_time: int =0, num_seconds:int = 2000, max_depart_delay:int = 10000):
+                 veh:str, endpoint: list,badpoints :list, config:dict, begin_time: int =0, num_seconds:int = 2000, max_depart_delay:int = 10000):
         
         self.sumoBinary = sumoBinary
         self.net = net_file
@@ -18,6 +18,7 @@ class qlEnv():
 
         self.veh = veh
         self.endpoint = endpoint
+        self.badpoints = badpoints
 
         self.episode = 0 # # of run time 
         self.begin_time = begin_time
@@ -106,7 +107,7 @@ class qlEnv():
     
     def get_reward(self, nextedge):
         reward = 0
-        if nextedge=='E6' or nextedge=='E2' or nextedge=='E13' or nextedge=='-E19':
+        if nextedge in self.badpoints:
             reward = -100
         elif nextedge=='E20':
             reward = 500

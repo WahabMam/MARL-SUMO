@@ -8,7 +8,7 @@ from rl.qlearning.qlagent import qlAgent
 
 def ql_run(sumoBinary, traci, logger, total_episodes, net, det, sumocfg, alldets,edgelists,dict_connection,veh,endpoints,badpoints,config,file_path): 
     env = qlEnv(sumoBinary=sumoBinary,traci = traci,logger= logger,net_file=net,det_file=det,cfg_file=sumocfg,alldets=alldets,edgelists=edgelists,
-                dict_connection=dict_connection,veh=veh,endpoint=endpoints,config = config)
+                dict_connection=dict_connection,veh=veh,endpoint=endpoints,badpoints=badpoints,config = config)
     agent = qlAgent(id=veh, edgelists= edgelists, dict_connection = dict_connection)
     qtable = agent.set_qtable()
     cntSuccess=0
@@ -69,9 +69,9 @@ def ql_run(sumoBinary, traci, logger, total_episodes, net, det, sumocfg, alldets
             cntSuccess = 0
             idxSuccess=-1
         lst_cntSuccess.append(cntSuccess)
-        data =[episode,len(routes),reward,str(routes)]
+        data =[episode,len(routes),rewards,str(routes)]
         save_data(file_path=file_path,data=data)
-        print(f"Agent : {agent.id} Episode : {episode}, len : {len(routes)} route : {routes}, reward : {reward}")
+        print(f"Agent : {agent.id} Episode : {episode}, len : {len(routes)} route : {routes}, reward : {rewards}")
         # logger.warn("+++++++++++++++++++++++++++++++++++++++")
         # logger.warn(f"Agent : {agent.id} Episode : {episode}, route : {routes}, reward : {reward}")
         # logger.warn("+++++++++++++++++++++++++++++++++++++++")

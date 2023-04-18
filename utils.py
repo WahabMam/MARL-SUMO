@@ -55,6 +55,9 @@ def parseConfig(args):
             p_config['scenario'] = config['common']['scenario']
             p_config['num_clients'] = config['sumo']['num_clients']
             p_config['use_gui'] = config['sumo']['use_gui']
+            p_config['start'] = config['sumo']['start']
+            p_config['start_edges'] = config['sumo']['start_edges']
+            p_config['quit_on_end'] = config['sumo']['quit_on_end']
             p_config['endpoints'] = config['sumo']['endpoints']
             p_config['badpoints'] = config['sumo']['badpoints']
             p_config['successend'] = config['sumo']['successend']
@@ -131,19 +134,6 @@ def calculate_connections(edgelists, net):
             dict_connection[k].append('')
     return dict_connection 
 
-def average_dicts(*dicts):
-    result_dict = {}
-    keys = set().union(*dicts) # get all unique keys in all dicts
-    
-    for key in keys:
-        # get the lists for the current key from all dicts
-        lists = [d.get(key, [0, 0, 0]) for d in dicts]
-        # calculate the averages of the lists
-        averages = [sum(x) / len(x) for x in zip(*lists)]
-        # store the averages in the result dict
-        result_dict[key] = averages
-    
-    return result_dict
 
 def getRandomRoute(dictconnection,sumo):
     start_edge = 0
@@ -177,10 +167,7 @@ def getRandomRoute(dictconnection,sumo):
             start_edge = 0
             dest_edge = 0
     return nodes
-    # for key,value in dictconnection.items():
-    #     if '' not in value:
-    #         valid_connections[key] = value
-    # return valid_connections
+
 
 # def plot_result(episodenum, lst_cntSuccess):
 #     ax = plt.figure().gca()

@@ -33,6 +33,7 @@ def ql_run(sumoBinary, traci, logger, total_episodes, net, det, sumocfg, alldets
                 if curedge in endpoints:
                     break
                 curedge = env.get_curedge(veh)
+                # print(f"Current edge : {curedge}")
                 action = agent.get_action(curedge) #현재 edge에서 가능한 (0,1,2) 중 선택 :e-greedy 방식으로
                 
                 nextedge = env.get_nextedge(curedge, action) #next edge 계산해서 env에 보냄.

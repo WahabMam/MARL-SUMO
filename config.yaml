@@ -8,7 +8,7 @@ common:
   det_file : ql2.det.xml
   port : 8819
   server_ip : 127.0.0.1 #add your ip address here
-  total_episodes : 20
+  total_episodes : 51
   log_level : info
 
 sumo:
@@ -19,4 +19,5 @@ sumo:
   endpoints : ['E20','-E19']
   badpoints : ['E5','E2','E13']
   successend : ["E20"]
+  start_edges : [["E19"], ["E10"], ["E12"], ["E7"],["E14"],["E5"]] #list of valid start edges len of start_edges should be equall to num_clients
 

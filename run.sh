@@ -1,6 +1,6 @@
 #!/bin/bash
 # change the loop value according to num_clients in config.yaml file
-for i in `seq 1 5`; do
+for i in `seq 0 4`; do
     echo "Starting Agent : $i "
     python agent.py --config="config.yaml" --vehicle=${i} &
 done

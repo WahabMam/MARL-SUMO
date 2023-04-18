@@ -52,7 +52,10 @@ class qlEnv():
         if self.config['num_clients'] != 0:
             sumo_cmd.extend(['--num-clients',str(self.config['num_clients'])])
         if self.use_gui:
-            sumo_cmd.extend(['--start', '--quit-on-end'])
+            if self.config['start']:
+                sumo_cmd.extend(['--start'])
+            if self.config['quit_on_end']:
+                sumo_cmd.extend(['--quit-on-end'])
             self.sumo.start(sumo_cmd,PORT)
             self.sumo.setOrder(int(self.config['veh_id'])+1)
             self.sumo.gui.setSchema(self.sumo.gui.DEFAULT_VIEW, "real world")
@@ -60,7 +63,7 @@ class qlEnv():
             self.sumo.start(sumo_cmd,PORT)
             self.sumo.setOrder(self.config['veh_id']+1)
 
-        # self.logger.warn("Sumo Started for Veh {} at: {}".format(self.config['veh_id'],sumo_cmd))
+        self.logger.warn("Sumo Started for Veh {} at: {}".format(self.config['veh_id'],sumo_cmd))
         '''
         if self.begin_time > 0:
             sumo_cmd.append('-b {}'.format(self.begin_time))
@@ -78,15 +81,15 @@ class qlEnv():
         #vehicle  생성
         route_id = "rou"+self.veh[3:]
         id = int(self.veh[3:])
-        # route = [["E19", "E0", "E1","E2"],["E10","E11","E12"]]
-        # route = route[id]
-        route = getRandomRoute(dictconnection=self.dict_connection,sumo = self.sumo)
-        # print("route : ++++++++++++++ {}".format(route))
+        route = self.config['start_edges']
+        route = route[id]
+        # route = getRandomRoute(dictconnection=self.dict_connection,sumo = self.sumo)
+        # print("Veh  : {} route : ++++++++++++++ {}".format(self.veh,route))
         self.sumo.route.add(route_id, route) #default route
         self.sumo.vehicle.add(self.veh, route_id,departLane='best')
         # self.sumo.vehicle.setParameter(self.veh,'depart',str(id*10))
-        curedge = self.get_curedge(self.veh)
         self.sumo.simulationStep()
+        curedge = self.get_curedge(self.veh)
         return curedge
 
     def get_curedge(self,veh):

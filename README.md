@@ -1,7 +1,11 @@
 Date : 13/04/2023
 MARL with Qlearning and Sumo.
 
-Current scenario uses two agents to perform qlearn in an sumo environment.
+Current scenario uses multiple agents to perform qlearn in an sumo environment.
+
+## Prerequisites
+This repository uses SUMO (Simulation of Urban MObility), an open source, highly portable, microscopic and continuous multi-modal traffic simulator. Which can be downloaded from https://www.eclipse.org/sumo/ based on your operating system.
+This repository requires an environment variable named `SUMO_HOME`, so, after installation ensure `SUMO_HOME` environemnt variable is set to the installed location of SUMO.
 
 ### Steps to run the experiment
 1. Clone the repository

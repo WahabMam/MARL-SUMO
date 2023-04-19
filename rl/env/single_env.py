@@ -102,7 +102,7 @@ class qlEnv():
         return done
     
     def get_reward(self, nextedge):
-        reward = 0
+        reward = -20
         if nextedge in self.badpoints:
             reward = -100
         elif nextedge=='E20':

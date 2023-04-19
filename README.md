@@ -52,3 +52,18 @@ This repository requires an environment variable named `SUMO_HOME`, so, after in
     run.bat
     ```
 8. The results generated can be seen in output dir.
+
+### Calculate all the routes from start to destination
+```
+python find_all_routes.py --config config.yaml --start E19 --dest E20 --nr 3
+```
+run this file to print all the possible routes from start to destination without crossing the conjusted edges.
+Change the command line arguments as per your need.
+
+```
+--start // start edge
+--dest // destination edge
+--nr // number of routes to be printed
+```
+
+

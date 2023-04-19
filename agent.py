@@ -16,40 +16,34 @@ def ql_run(sumoBinary, traci, logger, total_episodes, net, det, sumocfg, alldets
     idxSuccess=-1
     for episode in range(0,total_episodes):
         msg = "******** Episode {}/{} started ********".format(episode+1,total_episodes)
-        logger.info(msg)
-        #reset environment
+        logger.warning(msg)
         isSuccess=True
         routes = []
         rewards = 0
         agent.set_episilon()
+        #reset environment
         curedge = env.reset()
         routes.append(curedge)
-        # logger.info("Current edge : {}".format(curedge))
         done = False
         cnt=0
         while not done: 
             block = True
-            while block: #막힌 도로를 고름
+            while block: 
                 if curedge in endpoints:
                     break
                 curedge = env.get_curedge(veh)
-                # print(f"Current edge : {curedge}")
-                action = agent.get_action(curedge) #현재 edge에서 가능한 (0,1,2) 중 선택 :e-greedy 방식으로
-                
-                nextedge = env.get_nextedge(curedge, action) #next edge 계산해서 env에 보냄.
-                logger.info(f"Agent : {agent.id} Current edge : {curedge} Action : {action} nextedge : {nextedge}")
-                if nextedge!="" : break
-                agent.learn_block(curedge, action) #막힌 도로 선택시, blockreward 부여(blockreward - -100)
+                action = agent.get_action(curedge) 
+                nextedge = env.get_nextedge(curedge, action) #next edge 
+                if nextedge!="" : 
+                    break
+                agent.learn_block(curedge, action) 
             
             if nextedge in badpoints: isSuccess=False
             routes.append(nextedge)
 
             reward, done = env.step(curedge, nextedge) #changeTarget to nextedge
-            logger.info(f"Agent : {agent.id} Reward : {reward} done : {done} ")
             agent.learn(curedge, action, reward, nextedge)
             rewards += reward
-            
-
             if done:
                 if nextedge==endpoints[0]:
                     print('Arrived:) ')
@@ -72,9 +66,6 @@ def ql_run(sumoBinary, traci, logger, total_episodes, net, det, sumocfg, alldets
         data =[episode,len(routes),rewards,str(routes)]
         save_data(file_path=file_path,data=data)
         print(f"Agent : {agent.id} Episode : {episode}, len : {len(routes)} route : {routes}, reward : {rewards}")
-        # logger.warn("+++++++++++++++++++++++++++++++++++++++")
-        # logger.warn(f"Agent : {agent.id} Episode : {episode}, route : {routes}, reward : {reward}")
-        # logger.warn("+++++++++++++++++++++++++++++++++++++++")
     print('Routing #{} => Consecutive Success: {} from episode #{}'.format(episode, cntSuccess,idxSuccess))
     # plot_result(episodenum,lst_cntSuccess)
     sys.stdout.flush()

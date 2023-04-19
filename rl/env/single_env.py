@@ -64,7 +64,7 @@ class qlEnv():
             self.sumo.start(sumo_cmd,PORT)
             self.sumo.setOrder(self.config['veh_id']+1)
 
-        self.logger.warn("Sumo Started for Veh {} at: {}".format(self.config['veh_id'],sumo_cmd))
+        self.logger.warning("Sumo Started for Veh {} at: {}".format(self.config['veh_id'],sumo_cmd))
         '''
         if self.begin_time > 0:
             sumo_cmd.append('-b {}'.format(self.begin_time))
@@ -79,13 +79,11 @@ class qlEnv():
         self.episode+=1
         self.start_simulation()
 
-        #vehicle  생성
+        #vehicle  
         route_id = "rou"+self.veh[3:]
         id = int(self.veh[3:])
         route = self.config['start_edges']
         route = route[id]
-        # route = getRandomRoute(dictconnection=self.dict_connection,sumo = self.sumo)
-        # print("Veh  : {} route : ++++++++++++++ {}".format(self.veh,route))
         self.sumo.route.add(route_id, route) #default route
         self.sumo.vehicle.add(self.veh, route_id,departLane='best')
         # self.sumo.vehicle.setParameter(self.veh,'depart',str(id*10))
@@ -95,13 +93,11 @@ class qlEnv():
 
     def get_curedge(self,veh):
         curedge = self.sumo.vehicle.getRoadID(veh)
-        # curlane = self.sumo.vehicle.getLaneID(veh)
-        # curedge = self.sumo.lane.getEdgeID(curlane)
         return curedge
 
-    def get_done(self,curedge):
+    def get_done(self,nextedge):
         done = False
-        if curedge in self.endpoint:
+        if nextedge in self.endpoint:
             done = True
         return done
     
@@ -121,24 +117,15 @@ class qlEnv():
         return self.sumo.vehicle.getIDCount()
   
     def step(self, curedge, nextedge):
-        
-        beforeedge = curedge #비교해서 변하면 고를려고!
+        beforeedge = curedge 
 
-        done = self.get_done(curedge)
+        done = self.get_done(nextedge)
         reward = self.get_reward(nextedge)
 
         if done:
             return reward, done
         
-        self.sumo.vehicle.changeTarget(self.veh,nextedge) #차량 움직여!
-
-        # curedge = self.get_curedge(self.veh)
-        # done = self.get_done(curedge)
-        # if done:
-        #     return reward,done  
-        # self.sumo.simulationStep() 
-        # if curedge in self.edgelists and curedge !=beforeedge : #변했네!! 그럼 이제 다음 꺼 고르러 가야지
-        #     return reward,done  
+        self.sumo.vehicle.changeTarget(self.veh,nextedge) 
         
         while self.sumo.simulation.getMinExpectedNumber() > 0:
             if self.veh in self.sumo.vehicle.getIDList():
@@ -146,7 +133,7 @@ class qlEnv():
                 done = self.get_done(curedge)
                 if done:
                     break  
-                if curedge in self.edgelists and curedge !=beforeedge : #변했네!! 그럼 이제 다음 꺼 고르러 가야지
+                if curedge in self.edgelists and curedge !=beforeedge : 
                     break
             self.sumo.simulationStep() 
 

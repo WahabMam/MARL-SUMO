@@ -32,7 +32,6 @@ class qlAgent():
         self.qtable[curedge][action]+=self.blockreward
 
     def learn(self, curedge, action, reward, nextedge):
-        
         q1 = self.qtable[curedge][action]
         q2 = reward+self.discount_factor*max(self.qtable[nextedge])
         self.qtable[curedge][action] += self.step_size*(q2-q1)
@@ -42,10 +41,8 @@ class qlAgent():
         self.epsilon = min(self.minepsilon, self.epsilon*self.decayingrate)
         
     def get_action(self, curedge):
-        
         if np.random.rand()<self.epsilon:
             action = np.random.choice(self.actions)
-            
         else:
             qlist = self.qtable[curedge]
             maxlist = np.argwhere(qlist == np.amax(qlist))

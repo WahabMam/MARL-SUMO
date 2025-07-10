@@ -7,14 +7,14 @@ common:
   net_file : ql1.net.xml
   det_file : ql2.det.xml
   port : 8819
-  server_ip : 127.0.0.1 #add your ip address here
+  server_ip : 10.255.93.219 #add your ip address here
   total_episodes : 51
   log_level : info
 
 sumo:
   start : False,
   quit_on_end : True
-  num_clients : 0 # for one agent num_clients = 0 else the num_clients = number of desired clients
+  num_clients : 5 # for one agent num_clients = 0 else the num_clients = number of desired clients
   use_gui : True
   endpoints : ['E20','-E19']
   badpoints : ['E6','-E6','E2','-E2','E13','-E13','-E19']

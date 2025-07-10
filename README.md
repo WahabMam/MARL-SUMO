@@ -9,7 +9,26 @@ This repository uses SUMO (Simulation of Urban Mobility) version(1.14.1), an ope
 
 This repository requires an environment variable named `SUMO_HOME`, so, after installation ensure `SUMO_HOME` environemnt variable is set to the installed location of SUMO.
 
-The experimentation is carried out using **python v3.6**
+## Python Version Compatibility
+
+✅ This project was tested using **Python 3.6**.
+
+If your system uses a newer Python version (e.g., Python 3.12), we recommend creating a virtual environment with the correct Python version.
+
+**To create a virtual environment using Python 3.6:**
+
+- Make sure Python 3.6 is installed and accessible on your system. Then:
+
+**On Windows:**
+```bash
+py -3.6 -m venv venv-marl
+
+**On Linux/macOS**
+python3.6 -m venv venv-marl
+
+
+
+py -3.6 -m venv venv-marl
 <!-- 
 ## We stronlgy recommend to create Virtual environment and then clone the repository as follow:
 - **Linux:** Create a new virtual environment inside the project directory as ` python -m venv venv-marl` where venv-marl is the given name to the virtual environment.

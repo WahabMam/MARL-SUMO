@@ -2,132 +2,138 @@ Date : 26/04/2023
 
 ## Project Title: MultiVehiOpt: Multi-Agent Vehicle Routing Optimization.
 
-**Project Objective:** Current scenario uses  multiple agents to perform q-learning in an SUMO environment for route optimization.
+**Project Objective:** The current scenario uses multiple agents to perform Q-learning in a SUMO environment for route optimization.
+
+---
 
 ## Prerequisites (Software)
-This repository uses SUMO (Simulation of Urban Mobility) version(1.14.1), an open source, highly portable, microscopic and continuous multi-modal traffic simulator, which can be downloaded from https://www.eclipse.org/sumo/ based on your operating system.
 
-This repository requires an environment variable named `SUMO_HOME`, so, after installation ensure `SUMO_HOME` environemnt variable is set to the installed location of SUMO.
+This repository uses **SUMO (Simulation of Urban Mobility)** version **1.14.1**, an open-source, highly portable, microscopic and continuous multi-modal traffic simulator, which can be downloaded from:
+
+🔗 https://www.eclipse.org/sumo/
+
+> ⚠️ Make sure to set the environment variable `SUMO_HOME` to the installed location of SUMO.
+
+---
 
 ## Python Version Compatibility
 
 ✅ This project was tested using **Python 3.6**.
 
-If your system uses a newer Python version (e.g., Python 3.12), we recommend creating a virtual environment with the correct Python version.
+If your system uses a newer Python version (e.g., Python 3.12), we recommend creating a virtual environment using Python 3.6.
 
-**To create a virtual environment using Python 3.6:**
+### To create a virtual environment using Python 3.6:
 
-- Make sure Python 3.6 is installed and accessible on your system. Then:
-
-**On Windows:**
-```bash
-py -3.6 -m venv venv-marl
-
-**On Linux/macOS**
-python3.6 -m venv venv-marl
-
-
-
-py -3.6 -m venv venv-marl
-<!-- 
-## We stronlgy recommend to create Virtual environment and then clone the repository as follow:
-- **Linux:** Create a new virtual environment inside the project directory as ` python -m venv venv-marl` where venv-marl is the given name to the virtual environment.
-- **Windows:** Create a new virtual env as `virtualenv venv-marl`. -->
-
-
-
-### Steps to run the experiment
-1. Clone the repository
+- **Windows:**
+    ```bash
+    py -3.6 -m venv venv-marl
     ```
+
+- **Linux/macOS:**
+    ```bash
+    python3.6 -m venv venv-marl
+    ```
+
+---
+
+## Steps to Run the Experiment
+
+1. **Clone the repository**
+    ```bash
     git clone https://github.com/nclabteam/sumo-marl.git
     ```
-2. Open the cloned repo in terminal or if you have already have it
-    ```
+
+2. **Navigate to the project directory**
+    ```bash
     cd sumo-marl
     ```
-3. Open the config.yaml file and change the server_ip to your systems ip address. **(Description about config.yaml is given below)**
 
-4. This exp is done using virtual env so create a virtual env using python as (for **linux** users):
-    ```
-    python -m venv venv-marl
-    ```
-- **Windows** users can create virtual env as
-    ```
-    virtualenv venv-marl
-    ```
-5.  Activate the virtual env as in **linux** as:
-    ``` 
-    source venv-marl/bin/activate
-    ```
- - Activate the virtual env as in **Windows** as:
-    ``` 
-    venv-marl\Scripts\activate
-    ```
-6. Install the required packages from req.txt
-    ```
+3. **Open the `config.yaml` file** and change the `server_ip` to your system’s IP address.  
+   📌 *(See config.yaml details below)*
+
+4. **Create a virtual environment**  
+   - **Linux:**
+     ```bash
+     python -m venv venv-marl
+     ```
+   - **Windows:**
+     ```bash
+     virtualenv venv-marl
+     ```
+
+5. **Activate the virtual environment**  
+   - **Linux:**
+     ```bash
+     source venv-marl/bin/activate
+     ```
+   - **Windows:**
+     ```bash
+     venv-marl\Scripts\activate
+     ```
+
+6. **Install dependencies**
+    ```bash
     pip install -r req.txt
     ```
-7. Run the 'run.sh' file (**linux** users) :
-    ```
-    ./run.sh
-    ```
-- if the bash file shows some permission denied error change the permissions as:
 
-    ```
+7. **Run the experiment**
+   - **Linux:**
+     ```bash
+     ./run.sh
+     ```
+     > If permission is denied:
+     ```bash
      sudo chmod +x ./run.sh
-    ```
-- Run the 'run.bat' file (**windows** users) :
-    ```
-    run.bat
-    ```
-8. The results generated can be seen in output dir.
+     ```
+   - **Windows:**
+     ```bash
+     run.bat
+     ```
 
-9. For generating the figures, use the scripts provided inside `gen_figures` directory.
+8. **Results**
+   - Output logs and CSVs are stored in the `output/` directory.
+   - 📊 **Generated plots are saved in** `Results_Figures/`.
 
+9. **To generate result plots**, use the scripts provided in the `gen_figures/` directory.
 
-### Before running the experiment we need to make changes in 'config.yaml' and 'run.bat' file as per our need.
+---
 
-### Desciption about `config.yaml` file:
-- **Scenario** : It’s the directory where our sumo configuration and OSM map files are located.
-- **cfg_file**: Specifies the name of the SUMO configuration file.
-- **net_file**: Specifies the name of the SUMO network file.
-- **det_file**: Specifies the name of the SUMO detector file.
-- **port**: Specifies the port number to be used for communication with the 
-- **server_ip**: Specifies the IP address of the SUMO server( change as per your need).
-- **total_episodes**: Specifies the total number of episodes to run( change as per your need)
-- **start**: Specifies whether to start the SUMO simulation (True/False) if you chose ‘True’ then you don’t need to manually start the simulation otherwise you need.
-- **quit_on_end**: Specifies whether to quit the SUMO simulation automatically when it ends (True/False).
-- **num_clients**: Specifies the number of SUMO clients to be used (0 for one agent, or number of desired clients for multiple agents).
-- **use_gui**: Specifies whether to use the SUMO GUI for visualization (True/False).
-- **endpoints**: Specifies the list of valid endpoints for the simulation.
-- **badpoints**: Specifies the list of edges which are congested and for which we have a negative reward.
-- **successend**: Specifies the list of successful endpoint for the simulation which has highest positive reward.
-- **start_edges**: Specifies the list of valid start edges for the simulation, where the length of start_edges should be equal to ‘num_clients’.
-## Description about 'run.bat' and 'run.sh' file:
-“run.bat” file is a batch file used to run the Python script `agent.py` with specific configurations.
-- **num_agents** variable is used to specify the number of agents to be started by the batch file (0 for one agent, or number of desired clients for multiple agents).
-num_agents variable is used in the loop structure to determine the number of iterations.
+## Configuration Details: `config.yaml`
 
-# Additional Files:
-For generating the figures, use the scripts provided inside `gen_figures` directory.
+| Key | Description |
+|-----|-------------|
+| `Scenario` | Directory containing SUMO config and OSM map files |
+| `cfg_file` | SUMO configuration file name |
+| `net_file` | SUMO network file name |
+| `det_file` | SUMO detector file name |
+| `port` | Communication port |
+| `server_ip` | IP of the SUMO server (edit as needed) |
+| `total_episodes` | Total episodes to run |
+| `start` | Whether to auto-start SUMO (`True`/`False`) |
+| `quit_on_end` | Auto-quit SUMO on simulation end |
+| `num_clients` | Number of SUMO clients (0 = single agent) |
+| `use_gui` | Use SUMO GUI (`True`/`False`) |
+| `endpoints` | List of valid simulation endpoints |
+| `badpoints` | List of congested roads (negative reward) |
+| `successend` | List of successful destination edges |
+| `start_edges` | List of valid start edges (length = `num_clients`) |
 
-`find_all_routes.py` file is used to calculate all the possible non congested routes from start to destination.
-We only need to specify start point, dest point and number of routes that we want to be printed.
-This file can be used as
+---
 
-```
+## Batch File Explanation
+
+`run.bat` (for Windows) is used to start the simulation with multiple agents.
+
+- **`num_agents`**: Number of clients to start.
+- The value is used in a loop to spawn the desired number of agents.
+
+---
+
+## Additional Utility
+
+### Route Discovery
+
+To find non-congested routes, use `find_all_routes.py`:
+
+```bash
 python find_all_routes.py --config config.yaml --start E19 --dest E20 --nr 10
-```
-Where: 
-```
---start // start edge
---dest // destination edge
---nr // number of routes to be printed
---nr : remove if we want to print all possible routes whithout facing congested roads
-```
-
-
-
-
-
-

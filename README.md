@@ -1,6 +1,6 @@
 # MultiVehiOpt: Multi-Agent Vehicle Routing Optimization
 
-**Date:** 26/04/2023
+**Date:** 7/10/2025
 
 **Project Objective:** The current scenario uses multiple agents to perform Q-learning in a SUMO environment for route optimization.
 
@@ -27,7 +27,7 @@ Clone the repository by running `git clone https://github.com/nclabteam/sumo-mar
 
 ## Results and outputs
 
-Output logs and CSV files are saved in the `output/` directory, while generated plots are saved in the `Results_Figures/` directory. To generate result plots, use the scripts inside the `gen_figures/` directory.
+Once the simulation starts, an `output/` directory will be created automatically, where CSV files are stored based on the number of agents selected for the experiment. We provide code to generate figures in the `gen_figures/` directory, and the generated figures are saved into the `Results_Figures/` directory.
 
 ---
 
